@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@300;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #1e1e2f;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.todo-wrapper {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.todo-container {
+  background: #2a2a3c;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  flex: 1;
+}
+
+.todo-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.todo-header h1 {
+  font-size: 26px;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.todo-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.todo-input, .todo-description {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  outline: none;
+  background-color: #2e2e44;
+  color: #ffffff;
+  transition: border-color 0.3s;
+}
+
+.todo-input:focus, .todo-description:focus {
+  border-color: #4caf50;
+}
+
+.add-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #43a047;
+}
+
+.todo-list {
+  list-style-type: none;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #34344a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.3s;
+}
+
+.todo-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.todo-item.complete {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.action-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 10px;
+  color: #cccccc;
+  transition: color 0.3s;
+}
+
+.action-btn:hover {
+  color: #ffffff;
+}
+
+.delete-btn {
+  color: #e74c3c;
+}
+
+.delete-btn:hover {
+  color: #c0392b;
+}
+
+
+ /* Popup Container */
+ .popup-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: auto;
+  max-width: 300px;
+  display: none;
+  justify-content: flex-start;
+  align-items: flex-start;
+  z-index: 1000;
+}
+
+/* Popup */
+.popup {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+  border-left: 5px solid #e74c3c;
+}
+
+/* Error Icon */
+.popup .error-icon {
+  font-size: 30px;
+  color: #e74c3c;
+}
+
+/* Error Message */
+.popup .message {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Close Button */
+.popup .close-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.popup .close-btn:hover {
+  background: #c0392b;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade Out Animation */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Show Popup */
+.popup-container.show {
+  display: flex;
+}
+
+  /* Success Popup Container */
+  .success-popup-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: auto;
+    max-width: 300px;
+    display: none;
+    justify-content: flex-start;
+    align-items: flex-start;
+    z-index: 1000;
+  }
+
+  /* Success Popup */
+  .success-popup {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: successFadeIn 0.3s ease-out;
+    border-left: 5px solid #27ae60;
+  }
+
+  /* Success Icon */
+  .success-popup .success-icon {
+    font-size: 30px;
+    color: #27ae60;
+  }
+
+  /* Success Message */
+  .success-popup .success-message {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+  /* Success Close Button */
+  .success-popup .success-close-btn {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .success-popup .success-close-btn:hover {
+    background: #1e8449;
+  }
+
+  /* Fade In Animation */
+  @keyframes successFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Fade Out Animation */
+  @keyframes successFadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Show Popup */
+  .success-popup-container.show {
+    display: flex;
+  }

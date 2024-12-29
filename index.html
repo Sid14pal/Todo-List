@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Theme To-Do List</title>
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="todo-wrapper">
+    <div class="todo-container">
+      <div class="todo-header">
+        <h1>Add Task</h1>
+      </div>
+      <div class="todo-input-container" id="mainForm">
+        <input type="text" class="todo-input" placeholder="Task Title" id="todoTitle">
+        <textarea class="todo-description" rows="4" placeholder="Task Description" id="todoDescriptions"></textarea>
+        <button class="add-btn" id="addTask">Add Task</button>
+      </div>
+    </div>
+    <div class="todo-container">
+      <div class="todo-header">
+        <h1>Task List</h1>
+      </div>
+      <ul class="todo-list" id="todo-list">
+      </ul>
+      <div id="taskListContainer">
+        <p id="noTasksMessage" style="color: gray; text-align: center; font-style: italic;"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-container" id="popupContainer">
+    <div class="popup" id="popup">
+      <div class="error-icon">⚠️</div>
+      <div class="message"></div>
+      <button class="close-btn">Close</button>
+    </div>
+  </div>
+
+  <div class="success-popup-container" id="successPopupContainer">
+    <div class="success-popup" id="successPopup">
+      <div class="success-icon">✔️</div>
+      <div class="success-message"></div>
+      <button class="success-close-btn">Close</button>
+    </div>
+  </div>
+
+  <script>
+    let todoTitle = document.querySelector('#todoTitle');
+    let todoDescriptions = document.querySelector('#todoDescriptions');
+    let AddTaskBtn = document.querySelector('#addTask');
+
+    AddTaskBtn.addEventListener('click', (event)=> {
+        
+        let titleValue = todoTitle.value;
+        let descriptionValue = todoDescriptions.value;
+
+        let taskarr = JSON.parse(localStorage.getItem('todoList')) || [];
+        let newTask = {
+            title: titleValue,
+            description: descriptionValue,
+        };
+
+        function errorPopup () {
+          const popupContainer = document.querySelector('#popupContainer');
+          const closeBtn = document.querySelector('.close-btn');
+          popupContainer.classList.add('show');
+
+          setTimeout(() => {
+            popupContainer.classList.remove('show');
+          }, 3000);
+
+          closeBtn.addEventListener('click', function(){
+            popupContainer.classList.remove('show');
+          })
+        }
+
+        function successPopup () {
+          const successPopupContainer = document.querySelector('#successPopupContainer');
+          const successCloseBtn = document.querySelector('.success-close-btn');
+          successPopupContainer.classList.add('show');
+
+          setTimeout(() => {
+            successPopupContainer.classList.remove('show');
+          }, 3000);
+
+          successCloseBtn.addEventListener('click', function(){
+            successPopupContainer.classList.remove('show');
+          })
+        }
+
+        if (titleValue === '') {
+          errorPopup ();
+          const alertmsg = document.querySelector('.message');
+          alertmsg.textContent = 'Please Enter Your Note title';
+
+        } else if (descriptionValue === '') {
+          errorPopup ();
+          const alertmsg = document.querySelector('.message');
+           alertmsg.textContent = 'Please Enter Your Descriptions';
+        } else {
+          taskarr.push(newTask);
+          localStorage.setItem('todoList', JSON.stringify(taskarr));
+          successPopup ();
+          const SuccessAlertmsg = document.querySelector('.success-message');
+          SuccessAlertmsg.textContent = 'Your Note has been added successfully';
+          todoTitle.value = '';
+          todoDescriptions.value = '';
+        };
+        
+    })  
+
+    ////////////////////////////////
+
+    let todoitem = document.querySelector('#todo-list');
+    let list = JSON.parse(localStorage.getItem('todoList')) || [];
+    const noTasksMessage = document.getElementById('noTasksMessage');
+
+    if(list) {
+
+        list.forEach(element => {
+        const taskDiv = document.createElement('li');
+        taskDiv.classList.add('todo-item');
+        taskDiv.innerHTML = `
+           <strong>${element.title}</strong>
+           <button class="action-btn delete-btn">&#10006;</button>
+        `
+        todoitem.appendChild(taskDiv);
+        });
+
+        todoitem.addEventListener('click', (event) => {
+        if (event.target.classList.contains('delete-btn')) {
+            const itemIndex = event.target.getAttribute('data-index');
+            list.splice(itemIndex, 1);
+            localStorage.setItem('todoList', JSON.stringify(list));
+            event.target.parentElement.remove();
+            document.querySelectorAll('.delete-btn').forEach((btn, idx) => {
+                btn.setAttribute('data-index', idx);
+            });
+        }
+      });
+    }
+
+    if(list.length == 0) {
+      noTasksMessage.textContent = 'Nothing Added To The List'
+    }
+
+
+
+
+  </script>
+</body>
+</html>
